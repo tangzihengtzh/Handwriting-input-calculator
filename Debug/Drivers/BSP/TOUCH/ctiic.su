@@ -1,0 +1,9 @@
+../Drivers/BSP/TOUCH/ctiic.c:34:13:ct_iic_delay	8	static
+../Drivers/BSP/TOUCH/ctiic.c:44:6:ct_iic_init	40	static
+../Drivers/BSP/TOUCH/ctiic.c:69:6:ct_iic_start	8	static
+../Drivers/BSP/TOUCH/ctiic.c:85:6:ct_iic_stop	8	static
+../Drivers/BSP/TOUCH/ctiic.c:101:9:ct_iic_wait_ack	16	static
+../Drivers/BSP/TOUCH/ctiic.c:136:6:ct_iic_ack	8	static
+../Drivers/BSP/TOUCH/ctiic.c:153:6:ct_iic_nack	8	static
+../Drivers/BSP/TOUCH/ctiic.c:168:6:ct_iic_send_byte	24	static
+../Drivers/BSP/TOUCH/ctiic.c:190:9:ct_iic_read_byte	24	static

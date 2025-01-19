@@ -1,0 +1,4 @@
+../Drivers/BSP/TOUCH/ft5206.c:42:9:ft5206_wr_reg	3
+../Drivers/BSP/TOUCH/ft5206.c:72:6:ft5206_rd_reg	2
+../Drivers/BSP/TOUCH/ft5206.c:98:9:ft5206_init	7
+../Drivers/BSP/TOUCH/ft5206.c:153:9:ft5206_scan	14

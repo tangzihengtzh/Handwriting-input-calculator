@@ -1,0 +1,6 @@
+../Drivers/BSP/24CXX/24cxx.c:35:6:at24cxx_init	8	static
+../Drivers/BSP/24CXX/24cxx.c:45:9:at24cxx_read_one_byte	24	static
+../Drivers/BSP/24CXX/24cxx.c:90:6:at24cxx_write_one_byte	16	static
+../Drivers/BSP/24CXX/24cxx.c:127:9:at24cxx_check	16	static
+../Drivers/BSP/24CXX/24cxx.c:155:6:at24cxx_read	24	static
+../Drivers/BSP/24CXX/24cxx.c:170:6:at24cxx_write	16	static

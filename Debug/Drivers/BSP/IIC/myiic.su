@@ -1,0 +1,9 @@
+../Drivers/BSP/IIC/myiic.c:34:6:iic_init	40	static
+../Drivers/BSP/IIC/myiic.c:60:13:iic_delay	8	static
+../Drivers/BSP/IIC/myiic.c:70:6:iic_start	8	static
+../Drivers/BSP/IIC/myiic.c:86:6:iic_stop	8	static
+../Drivers/BSP/IIC/myiic.c:102:9:iic_wait_ack	16	static
+../Drivers/BSP/IIC/myiic.c:134:6:iic_ack	8	static
+../Drivers/BSP/IIC/myiic.c:151:6:iic_nack	8	static
+../Drivers/BSP/IIC/myiic.c:166:6:iic_send_byte	24	static
+../Drivers/BSP/IIC/myiic.c:187:9:iic_read_byte	24	static

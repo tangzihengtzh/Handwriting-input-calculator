@@ -1,0 +1,14 @@
+../Drivers/BSP/TOUCH/touch.c:59:13:tp_write_byte	3
+../Drivers/BSP/TOUCH/touch.c:88:17:tp_read_ad	3
+../Drivers/BSP/TOUCH/touch.c:135:17:tp_read_xoy	6
+../Drivers/BSP/TOUCH/touch.c:176:13:tp_read_xy	2
+../Drivers/BSP/TOUCH/touch.c:206:16:tp_read_xy2	9
+../Drivers/BSP/TOUCH/touch.c:235:13:tp_draw_touch_point	1
+../Drivers/BSP/TOUCH/touch.c:301:5:map_coordinates	4
+../Drivers/BSP/TOUCH/touch.c:332:5:tp_draw_big_point	3
+../Drivers/BSP/TOUCH/touch.c:364:16:tp_scan	6
+../Drivers/BSP/TOUCH/touch.c:418:6:tp_save_adjust_data	1
+../Drivers/BSP/TOUCH/touch.c:438:9:tp_get_adjust_data	2
+../Drivers/BSP/TOUCH/touch.c:467:13:tp_adjust_info_show	2
+../Drivers/BSP/TOUCH/touch.c:500:6:tp_adjust	22
+../Drivers/BSP/TOUCH/touch.c:607:9:tp_init	13

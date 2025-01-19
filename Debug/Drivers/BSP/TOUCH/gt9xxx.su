@@ -1,0 +1,4 @@
+../Drivers/BSP/TOUCH/gt9xxx.c:49:9:gt9xxx_wr_reg	24	static
+../Drivers/BSP/TOUCH/gt9xxx.c:81:6:gt9xxx_rd_reg	32	static
+../Drivers/BSP/TOUCH/gt9xxx.c:109:9:gt9xxx_init	48	static
+../Drivers/BSP/TOUCH/gt9xxx.c:184:9:gt9xxx_scan	32	static

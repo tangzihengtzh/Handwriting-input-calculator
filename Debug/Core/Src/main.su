@@ -1,0 +1,9 @@
+../Core/Src/main.c:52:6:expand_input	48	static
+../Core/Src/main.c:83:6:load_draw_dialog	24	static
+../Core/Src/main.c:97:6:lcd_draw_bline	64	static
+../Core/Src/main.c:173:6:draw_input_to_screen	56	static
+../Core/Src/main.c:204:6:draw_input_to_screen_with_border	64	static
+../Core/Src/main.c:230:6:rtp_test	64	static
+../Core/Src/main.c:354:5:main	32	static
+../Core/Src/main.c:427:6:SystemClock_Config	88	static
+../Core/Src/main.c:476:6:Error_Handler	4	static,ignoring_inline_asm
