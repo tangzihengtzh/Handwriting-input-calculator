@@ -1,0 +1,11 @@
+# STM32CubeIDE generated build output
+Debug/
+Release/
+
+# CubeIDE local metadata
+.settings/language.settings.xml
+
+# Host/editor files
+.DS_Store
+Thumbs.db
+*.swp

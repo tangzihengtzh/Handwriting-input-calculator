@@ -274,7 +274,7 @@ void rtp_test(void)
 					{
 
 					    // 定义输出字符串
-					    char output_string[20];
+					    char output_string[RESULT_STRING_LENGTH];
 
 					    // 处理表达式
 					    process_expression(input, output_string,loc_mask);

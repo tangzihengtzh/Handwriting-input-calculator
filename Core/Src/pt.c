@@ -103,6 +103,7 @@ void fully_connected(const float* input, const float* weights, const float* bias
 #include <stdlib.h>
 
 // �Ż����ǰ�򴫲�����
+#if 0
 void forward(float* input, float* output) {
     // ��ʱ�洢��������̬���䣩
     float* conv1_out = (float*)malloc(sizeof(float) * 4 * 28 * 28); // ��1����������
@@ -145,7 +146,26 @@ void forward(float* input, float* output) {
     // �ͷ�ȫ���Ӳ�1�����
     free(fc1_out);
 }
+#endif
 
+/* Fixed workspaces avoid heap fragmentation during repeated predictions. */
+static float conv1_workspace[4 * 28 * 28];
+static float pool1_workspace[4 * 14 * 14];
+static float conv2_workspace[4 * 14 * 14];
+static float pool2_workspace[4 * 7 * 7];
+static float fc1_workspace[16];
+
+void forward(float* input, float* output) {
+    conv2d(input, conv1_weight, conv1_bias, conv1_workspace, 1, 4, 28, 28, 3, 1, 1);
+    relu(conv1_workspace, 4 * 28 * 28);
+    max_pool2d(conv1_workspace, pool1_workspace, 4, 28, 28, 2, 2);
+    conv2d(pool1_workspace, conv2_weight, conv2_bias, conv2_workspace, 4, 4, 14, 14, 3, 1, 1);
+    relu(conv2_workspace, 4 * 14 * 14);
+    max_pool2d(conv2_workspace, pool2_workspace, 4, 14, 14, 2, 2);
+    fully_connected(pool2_workspace, fc1_weight, fc1_bias, fc1_workspace, 4 * 7 * 7, 16);
+    relu(fc1_workspace, 16);
+    fully_connected(fc1_workspace, fc2_weight, fc2_bias, output, 16, 14);
+}
 
 /**
  * @brief �ָ��ַ�����
@@ -244,12 +264,13 @@ void process_expression(const uint8_t* canvas, char* output_string ,int *loc_mas
     char current_operator = 0; // ��ǰ������
 
     int loc_idx = 0;
+    for (int i = 0; i < MAX_LOCATIONS; i++) {
+        loc_mask[i] = 0;
+    }
     lcd_show_string(120, 100, 200, 16, 16, "segment_character", BLUE);
     while (start_mask < CANVAS_WIDTH) {
         // ���÷ָ��
         int seg_result = segment_character(canvas, start_mask, char_slice, &next_mask);
-        loc_mask[loc_idx] = next_mask;
-        loc_idx ++;
         // ���û���ҵ����ַ����˳�ѭ��
         if (seg_result == 0) {
         	lcd_show_string(120, 100, 200, 16, 16, "no input", BLUE);
@@ -257,6 +278,9 @@ void process_expression(const uint8_t* canvas, char* output_string ,int *loc_mas
         }
 
         // ����ǰ�򴫲�����ʶ���ַ�
+        if (loc_idx < MAX_LOCATIONS) {
+            loc_mask[loc_idx++] = next_mask;
+        }
         forward((float*)char_slice, output);
         lcd_show_string(120, 120, 200, 16, 16, "detect_character", BLUE);
 
@@ -271,6 +295,10 @@ void process_expression(const uint8_t* canvas, char* output_string ,int *loc_mas
         }
 
         // ��Ԥ�����תΪ�ַ��������
+        if (expression_index >= MAX_EXPRESSION_LENGTH - 1) {
+            break;
+        }
+
         if (predicted_class >= 0 && predicted_class <= 9) {
             // ʶ��Ϊ����
             current_number = current_number * 10 + predicted_class; // �����λ��
@@ -284,6 +312,10 @@ void process_expression(const uint8_t* canvas, char* output_string ,int *loc_mas
             }
             else {
                 // ������һ��������
+                if (current_operator == 13 && current_number == 0) {
+                    snprintf(output_string, RESULT_STRING_LENGTH, "ERR:DIV0");
+                    return;
+                }
                 switch (current_operator) {
                 case 10: result += current_number; break; // �ӷ�
                 case 11: result -= current_number; break; // ����
@@ -312,6 +344,10 @@ void process_expression(const uint8_t* canvas, char* output_string ,int *loc_mas
     // �������һ������
     lcd_show_string(120, 140, 200, 16, 16, "get_result", BLUE);
     if (current_operator != 0) {
+        if (current_operator == 13 && current_number == 0) {
+            snprintf(output_string, RESULT_STRING_LENGTH, "ERR:DIV0");
+            return;
+        }
         switch (current_operator) {
         case 10: result += current_number; break; // �ӷ�
         case 11: result -= current_number; break; // ����
@@ -332,5 +368,5 @@ void process_expression(const uint8_t* canvas, char* output_string ,int *loc_mas
     lcd_show_string(120, 120, 200, 16, 16, "                ", BLUE);
     lcd_show_string(120, 140, 200, 16, 16, "                ", BLUE);
     lcd_show_string(120, 160, 200, 16, 16, "finished", BLUE);
-    sprintf(output_string, "%s=%d", expression, result);
+    snprintf(output_string, RESULT_STRING_LENGTH, "%s=%d", expression, result);
 }

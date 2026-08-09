@@ -1,2 +1,29 @@
-效果如下：<br>![3](https://github.com/user-attachments/assets/4e31bac1-afc9-4245-9be6-30430b720f7b)
-<br>![4](https://github.com/user-attachments/assets/4cf44990-bd44-4354-a564-cf9222be5311)
+# STM32 手写表达式计算器
+
+这是一个运行在 STM32F407ZGTX 开发板上的手写表达式计算器：触摸屏采集笔迹，程序按字符分割后使用片上 CNN 识别数字和四则运算符，并在 LCD 上显示表达式与结果。
+
+## 工程信息
+
+- MCU：STM32F407ZGTX，Cortex-M4F，168 MHz
+- 工程：STM32CubeIDE / CubeMX
+- 显示与触摸：FSMC LCD、I2C 触摸控制器（具体屏幕/触摸型号由 `Demo8_1TFTLCD_V3.ioc` 和 BSP 配置决定）
+- 识别类别：数字 `0`–`9`、加减乘除
+
+## 使用方式
+
+1. 使用 STM32CubeIDE 导入本仓库根目录的现有工程。
+2. 根据自己的开发板确认 HSE、LCD 接线、触摸控制器和校准数据配置。
+3. 选择 `Debug` 或 `Release` 构建并下载到目标板。
+4. 首次触摸屏异常时按 `KEY0` 进入校准；在底部区域书写，点击左上角预测。
+
+仓库不再保存 `Debug/`、`Release/` 编译产物；这些目录由 CubeIDE 在本机生成。旧版自动生成 makefile 包含原作者电脑的绝对路径，因此推荐用 CubeIDE 重新生成构建文件。
+
+## 当前限制
+
+- 字符按水平方向连续笔迹分割，字符之间需要留出空白列。
+- 表达式使用整数四则运算；除数为零会显示错误。
+- 本项目没有仿真测试，发布前仍应在实际 LCD、触摸屏和 F407 板卡上验证触摸坐标、模型识别率和 Flash/RAM 占用。
+
+## 版本
+
+维护记录见 [`CHANGELOG.md`](CHANGELOG.md)。

@@ -512,6 +512,9 @@ static float fc2_bias[] = {
 #define CHAR_WIDTH 28         // �ַ����
 #define CHAR_HEIGHT 28        // �ַ��߶�
 
+#define MAX_LOCATIONS 10
+#define RESULT_STRING_LENGTH 20
+
 int segment_character(
     const uint8_t* canvas,
     int start_mask,
