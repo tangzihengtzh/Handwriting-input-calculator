@@ -49,6 +49,7 @@
  * @param y 触摸屏画布的纵坐标 (240-319)
  * @param input 输入画布数组 (28*3 x 28 的二值化数组)
  */
+#if 0
 void expand_input(int x, int y, uint8_t* input, int thickness) {
     // 映射触摸屏坐标到28*3 x 28画布
     int mapped_x = x * CANVAS_WIDTH / 240;
@@ -73,7 +74,32 @@ void expand_input(int x, int y, uint8_t* input, int thickness) {
         }
     }
 }
+#endif
 
+void expand_input(int x, int y, uint8_t* input, int thickness) {
+    if (thickness < 0) {
+        return;
+    }
+
+    /* Round the mapping and preserve both canvas endpoints. */
+    int mapped_x = (x * (CANVAS_WIDTH - 1) + 119) / 239;
+    int mapped_y = ((y - 240) * (CANVAS_HEIGHT - 1) + 39) / 79;
+
+    if (mapped_x < 0 || mapped_x >= CANVAS_WIDTH || mapped_y < 0 || mapped_y >= CANVAS_HEIGHT) {
+        return;
+    }
+
+    /* Expand symmetrically around the mapped touch point. */
+    for (int dx = -thickness; dx <= thickness; dx++) {
+        for (int dy = -thickness; dy <= thickness; dy++) {
+            int nx = mapped_x + dx;
+            int ny = mapped_y + dy;
+            if (nx >= 0 && nx < CANVAS_WIDTH && ny >= 0 && ny < CANVAS_HEIGHT) {
+                input[ny * CANVAS_WIDTH + nx] = 1;
+            }
+        }
+    }
+}
 
 /**
  * @brief       清空屏幕并在右上角显示"RST"
